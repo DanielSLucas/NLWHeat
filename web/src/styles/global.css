@@ -10,3 +10,24 @@ body {
   color: #e1e1e6;
   background: #121214;
 }
+
+@media(min-width: 320px) {
+  html {
+    font-size: 70%;
+  }
+}
+@media(min-width: 375px) {
+  html {
+    font-size: 87.5%;
+  }
+}
+@media(min-width: 720px) {
+  html {
+    font-size: 93.75%;
+  }
+}
+@media(min-width: 1080px) {
+  html {
+    font-size: 100%;
+  }
+}

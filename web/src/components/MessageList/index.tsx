@@ -1,5 +1,6 @@
 /* eslint-disable camelcase */
 import { useEffect, useState } from 'react';
+import io from 'socket.io-client';
 
 import styles from './styles.module.scss';
 
@@ -15,8 +16,28 @@ type Message = {
   };
 };
 
+const messagesQueue: Message[] = [];
+
+const socket = io('http://localhost:3333');
+
+socket.on('new_message', (newMessage: Message) => {
+  messagesQueue.push(newMessage);
+});
+
 const MessageList: React.FC = () => {
   const [messages, setMessages] = useState<Message[]>([]);
+
+  useEffect(() => {
+    setInterval(() => {
+      if (messagesQueue.length > 0) {
+        setMessages(state =>
+          [messagesQueue[0], state[0], state[1]].filter(Boolean),
+        );
+
+        messagesQueue.shift();
+      }
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     api
